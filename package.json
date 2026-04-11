@@ -2,6 +2,14 @@
   "name": "avanarul-trust-frontend",
   "version": "1.0.0",
   "description": "Frontend for Avanarul Trust",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avanarultrust/frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avanarultrust/frontend/issues"
+  },
+  "homepage": "https://github.com/avanarultrust/frontend#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

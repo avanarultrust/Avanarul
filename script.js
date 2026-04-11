@@ -259,7 +259,7 @@ if (registerForm) {
     const password = document.getElementById('register-password').value;
 
     try {
-      const response = await fetch('${API_URL}/api/register', {
+      const response = await fetch(`${API_URL}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, mobile, password })
@@ -291,7 +291,7 @@ if (loginForm) {
     const password = document.getElementById('login-password').value;
 
     try {
-      const response = await fetch('${API_URL}/api/login', {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -351,7 +351,7 @@ if (forgotPasswordForm) {
     const email = document.getElementById('forgot-email').value;
 
     try {
-      const response = await fetch('${API_URL}/api/forgot-password', {
+      const response = await fetch(`${API_URL}/api/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -389,7 +389,7 @@ async function checkUserSession() {
   if (!token || !userStr) return;
 
   try {
-    const res = await fetch('${API_URL}/api/verify', {
+    const res = await fetch(`${API_URL}/api/verify`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
