@@ -1,3 +1,5 @@
+import { API_URL } from './config.js';
+
 // Admin Dashboard Logic
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = true;
             btn.textContent = 'Uploading...';
 
-            const response = await fetch('/api/admin/projects', {
+            const response = await fetch('${API_URL}/api/admin/projects', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData
@@ -71,7 +73,7 @@ async function loadDashboardData() {
 
     try {
         // Fetch All Transactions
-        const resTrans = await fetch('/api/admin/transactions', {
+        const resTrans = await fetch('${API_URL}/api/admin/transactions', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const transactions = await resTrans.json();
@@ -97,7 +99,7 @@ async function loadDashboardData() {
         window.currentTransactions = transactions;
 
         // Fetch Projects
-        const resProj = await fetch('/api/projects');
+        const resProj = await fetch('${API_URL}/api/projects');
         const projects = await resProj.json();
         document.getElementById('project-count').textContent = projects.length;
 
@@ -123,9 +125,13 @@ function renderProjectList(projects) {
         return;
     }
 
-    container.innerHTML = `<div class="project-grid">${projects.map(p => `
+    container.innerHTML = `<div class="project-grid">${projects.map(p => {
+        const imgPath = p.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=600&q=80';
+        const fullImg = imgPath.startsWith('http') ? imgPath : `${API_URL}${imgPath}`;
+        
+        return `
         <div class="project-item">
-            <img src="${p.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=600&q=80'}" 
+            <img src="${fullImg}" 
                  alt="${p.title}" 
                  class="project-item-image">
             <div class="project-item-body">
@@ -145,8 +151,8 @@ function renderProjectList(projects) {
                     <i class="fas fa-trash" style="margin-right: 5px;"></i>Delete
                 </button>
             </div>
-        </div>
-    `).join('')}</div>`;
+        </div>`;
+    }).join('')}</div>`;
 }
 
 // ===== TAB SWITCHING =====
@@ -221,7 +227,7 @@ async function saveProjectEdit() {
     }
 
     try {
-        const response = await fetch(`/api/admin/projects/${id}`, {
+        const response = await fetch(`${API_URL}/api/admin/projects/${id}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -259,7 +265,7 @@ async function confirmDelete() {
     const id = document.getElementById('delete-project-id').value;
 
     try {
-        const response = await fetch(`/api/admin/projects/${id}`, {
+        const response = await fetch(`${API_URL}/api/admin/projects/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });

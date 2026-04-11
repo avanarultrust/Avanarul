@@ -1,3 +1,5 @@
+import { API_URL } from './config.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     // Verify token with backend
-    const response = await fetch('/api/verify', {
+    const response = await fetch('${API_URL}/api/verify', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -50,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function fetchDonations(token) {
   const listContainer = document.getElementById('donation-list');
   try {
-    const response = await fetch('/api/user/donations', {
+    const response = await fetch('${API_URL}/api/user/donations', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const donations = await response.json();

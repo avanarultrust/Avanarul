@@ -1,3 +1,5 @@
+import { API_URL } from './config.js';
+
 // ===== Navbar Scroll Effect =====
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -257,7 +259,7 @@ if (registerForm) {
     const password = document.getElementById('register-password').value;
 
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch('${API_URL}/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, mobile, password })
@@ -289,7 +291,7 @@ if (loginForm) {
     const password = document.getElementById('login-password').value;
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('${API_URL}/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -349,7 +351,7 @@ if (forgotPasswordForm) {
     const email = document.getElementById('forgot-email').value;
 
     try {
-      const response = await fetch('/api/forgot-password', {
+      const response = await fetch('${API_URL}/api/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -387,7 +389,7 @@ async function checkUserSession() {
   if (!token || !userStr) return;
 
   try {
-    const res = await fetch('/api/verify', {
+    const res = await fetch('${API_URL}/api/verify', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await res.json();
@@ -438,7 +440,7 @@ async function fetchJourneyProjects() {
   if (!container) return;
 
   try {
-    const response = await fetch('/api/projects');
+    const response = await fetch('${API_URL}/api/projects');
     const projects = await response.json();
 
     if (projects.length === 0) {
@@ -446,11 +448,15 @@ async function fetchJourneyProjects() {
       return;
     }
 
-    container.innerHTML = projects.map(p => `
+    container.innerHTML = projects.map(p => {
+      const mainImg = p.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=600&q=80';
+      const fullImgUrl = mainImg.startsWith('http') ? mainImg : `${API_URL}${mainImg}`;
+      
+      return `
       <a href="/project.html?id=${p._id}" class="journey-card-link">
         <article class="journey-card reveal">
           <div class="journey-image-wrapper">
-            <img src="${p.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=600&q=80'}" alt="${p.title}" class="journey-image">
+            <img src="${fullImgUrl}" alt="${p.title}" class="journey-image">
             ${p.images.length > 1 ? `
               <div class="journey-badge">
                 <i class="fas fa-images"></i>

@@ -1,3 +1,5 @@
+import { API_URL } from './config.js';
+
 // ===== Project Detail Page Logic =====
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    const response = await fetch(`/api/projects/${projectId}`);
+    const response = await fetch(`${API_URL}/api/projects/${projectId}`);
     
     if (!response.ok) {
       showError();
@@ -40,7 +42,8 @@ function renderProject(project) {
   document.title = `${project.title} | Avanarul Trust`;
 
   // Hero
-  const heroImg = project.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=1920&q=80';
+  const heroImgPath = project.images[0] || 'https://images.unsplash.com/photo-1541339905195-4360e7746c70?auto=format&fit=crop&w=1920&q=80';
+  const heroImg = heroImgPath.startsWith('http') ? heroImgPath : `${API_URL}${heroImgPath}`;
   document.getElementById('hero-image').src = heroImg;
   document.getElementById('hero-image').alt = project.title;
   document.getElementById('project-title').textContent = project.title;
@@ -71,7 +74,7 @@ function renderProject(project) {
 
   galleryGrid.innerHTML = project.images.map((img, index) => `
     <div class="gallery-item" onclick="openLightbox(${index})">
-      <img src="${img}" alt="${project.title} - Photo ${index + 1}" loading="lazy">
+      <img src="${img.startsWith('http') ? img : `${API_URL}${img}`}" alt="${project.title} - Photo ${index + 1}" loading="lazy">
       <div class="gallery-item-overlay">
         <i class="fas fa-search-plus"></i>
       </div>
@@ -122,7 +125,8 @@ function setupLightbox(images) {
 function openLightbox(index) {
   currentIndex = index;
   const lightbox = document.getElementById('lightbox');
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+  const imgSrc = currentImages[currentIndex];
+  document.getElementById('lightbox-img').src = imgSrc.startsWith('http') ? imgSrc : `${API_URL}${imgSrc}`;
   document.getElementById('lightbox-counter').textContent = `${currentIndex + 1} / ${currentImages.length}`;
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
