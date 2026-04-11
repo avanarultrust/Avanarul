@@ -440,7 +440,7 @@ async function fetchJourneyProjects() {
   if (!container) return;
 
   try {
-    const response = await fetch('${API_URL}/api/projects');
+    const response = await fetch(`${API_URL}/api/projects`);
     const projects = await response.json();
 
     if (projects.length === 0) {
@@ -472,7 +472,8 @@ async function fetchJourneyProjects() {
           </div>
         </article>
       </a>
-    `).join('');
+      `;
+    }).join('');
 
     // Trigger reveal animation for dynamic content
     setTimeout(() => {
