@@ -65,6 +65,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.textContent = 'Publish to Journey';
         }
     });
+
+    // Mobile Sidebar Toggle
+    const adminToggle = document.getElementById('admin-toggle');
+    const adminSidebar = document.getElementById('admin-sidebar');
+    if (adminToggle) {
+        adminToggle.addEventListener('click', () => {
+            adminSidebar.classList.toggle('open');
+            adminToggle.querySelector('i').classList.toggle('fa-bars');
+            adminToggle.querySelector('i').classList.toggle('fa-times');
+        });
+    }
 });
 
 // ===== LOAD ALL DATA =====
@@ -156,19 +167,18 @@ function renderProjectList(projects) {
 }
 
 // ===== TAB SWITCHING =====
-function switchTab(tabId) {
-    document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    
-    document.getElementById(`${tabId}-tab`).classList.add('active');
-    event.currentTarget.classList.add('active');
-    
-    const titles = {
-        overview: 'Dashboard Overview',
-        transactions: 'All Transactions',
-        projects: 'Journey Projects'
-    };
     document.querySelector('.header h1').textContent = titles[tabId] || tabId;
+
+    // Auto-close sidebar on mobile after tab switch
+    if (window.innerWidth <= 992) {
+        const adminSidebar = document.getElementById('admin-sidebar');
+        const adminToggle = document.getElementById('admin-toggle');
+        adminSidebar.classList.remove('open');
+        if (adminToggle) {
+            adminToggle.querySelector('i').classList.add('fa-bars');
+            adminToggle.querySelector('i').classList.remove('fa-times');
+        }
+    }
 }
 
 // ===== TOGGLE ADD FORM =====

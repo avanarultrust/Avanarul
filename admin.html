@@ -74,20 +74,55 @@
             box-shadow: inset 0 0 0 1px var(--border);
         }
 
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
-            flex: 1;
-            padding: 40px 60px;
+        /* Mobile Toggle */
+        .admin-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+            cursor: pointer;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 20px;
+        /* Sidebar Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: -260px;
+                transition: transform 0.3s ease;
+                z-index: 1000;
+            }
+            .sidebar.open {
+                transform: translateX(260px);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 40px;
+            }
+            .admin-toggle {
+                display: flex;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Tables Responsive */
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary-dark); }
@@ -293,7 +328,11 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <button class="admin-toggle" id="admin-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="admin-sidebar">
         <a href="/" class="logo">
             <i class="fas fa-shield-halved"></i>
             Avanarul Admin
@@ -331,20 +370,22 @@
 
         <div id="transactions-tab" class="section-card">
             <h2>All Transactions</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Donor</th>
-                        <th>Email</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="transactions-body">
-                    <!-- Dynamic Rows -->
-                </tbody>
-            </table>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Donor</th>
+                            <th>Email</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div id="projects-tab" class="section-card">

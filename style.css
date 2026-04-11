@@ -64,7 +64,11 @@ img { max-width: 100%; display: block; }
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
 }
 
 /* ===== NAVBAR ===== */
@@ -141,6 +145,13 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   color: white;
   font-size: 1.1rem;
+}
+
+/* === Mobile Navbar Overrides === */
+@media (max-width: 768px) {
+  .nav-container { height: 64px; padding: 0 16px; }
+  .logo-img { height: 44px; width: 44px; }
+  .nav-logo { font-size: 1.25rem; }
 }
 
 .nav-menu {
@@ -1079,21 +1090,31 @@ img { max-width: 100%; display: block; }
   color: rgba(255, 255, 255, 0.3);
 }
 
-/* ===== MOBILE BOTTOM NAV ===== */
+/* ===== MOBILE BOTTOM NAV (PREMIUM) ===== */
 .mobile-bottom-nav {
   display: none;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--white);
-  border-top: 1px solid var(--border);
+  bottom: 12px; /* Floating style */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 400px;
+  background: rgba(255, 253, 248, 0.85); /* var(--white) with alpha */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-top: none;
+  border: 1px solid var(--border-warm);
   z-index: 999;
-  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  padding: 10px 8px;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(44, 29, 14, 0.15);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.mobile-bottom-nav {
-  justify-content: space-around;
+@media (min-width: 769px) {
+  .mobile-bottom-nav { display: none !important; }
 }
 
 .mobile-nav-item {
@@ -1101,35 +1122,45 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 600;
   color: var(--text-muted);
   transition: var(--transition);
-  padding: 4px 12px;
+  text-decoration: none;
+  flex: 1;
 }
 
 .mobile-nav-item i {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
 }
 
 .mobile-nav-item.active {
   color: var(--primary);
 }
 
-.mobile-nav-item.donate-btn {
-  color: var(--white);
+.mobile-nav-item:active i {
+  transform: scale(0.9);
 }
 
-.mobile-nav-item.donate-btn i {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+/* Donate Tab Special Styling */
+.mobile-nav-item.tab-donate {
+  position: relative;
+  z-index: 2;
+}
+
+.mobile-nav-item.tab-donate i {
+  background: linear-gradient(135deg, var(--gold-bright), var(--primary-dark));
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -24px;
-  box-shadow: 0 4px 15px var(--primary-glow);
-  font-size: 1.1rem;
+  color: var(--white);
+  box-shadow: 0 4px 12px var(--primary-glow);
+  margin-top: -6px;
+  font-size: 1rem;
 }
 
 /* ===== SCROLL REVEAL ===== */
@@ -1745,5 +1776,59 @@ img { max-width: 100%; display: block; }
 @media (max-width: 480px) {
   .journey-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ===== SHARED COMPONENT STYLES (FROM INTERNAL BLOCKS) ===== */
+
+/* Profile Styles */
+.profile-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.profile-header {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .profile-header { flex-direction: column; text-align: center; }
+}
+
+/* Donation Form Styles */
+.section-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .amount-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Modal Responsiveness */
+@media (max-width: 480px) {
+  .modal-card {
+    width: 95%;
+    padding: 30px 20px;
+    border-radius: 24px;
   }
 }

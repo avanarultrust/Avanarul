@@ -372,14 +372,34 @@ if (forgotPasswordForm) {
 }
 
 // Initial Setup
-document.addEventListener('DOMContentLoaded', () => {
-  if (btnLogin) {
-    btnLogin.addEventListener('click', openModalHandler);
-  }
-  
   checkUserSession();
   fetchJourneyProjects();
+  initMobileBottomNav();
 });
+
+// ===== Mobile Bottom Nav Intelligence =====
+function initMobileBottomNav() {
+  const profileBtn = document.getElementById('mobile-profile-link');
+  if (profileBtn) {
+    profileBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Not logged in -> Open Modal
+        if (typeof openModalHandler === 'function') {
+          openModalHandler(e);
+        } else {
+          document.getElementById('login-modal').classList.add('active');
+        }
+      } else {
+        // Logged in -> Go to Profile (this handler will be overridden by updateNavForUser if session is checked)
+        const user = JSON.parse(localStorage.getItem('user'));
+        const redirectPath = user && user.email === 'avanarultrust@gmail.com' ? '/admin.html' : '/profile.html';
+        window.location.href = window.location.origin + redirectPath;
+      }
+    });
+  }
+}
 
 // Check Session & Update UI
 async function checkUserSession() {
