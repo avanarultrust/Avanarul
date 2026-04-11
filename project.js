@@ -139,7 +139,8 @@ function closeLightbox() {
 
 function navigateLightbox(direction) {
   currentIndex = (currentIndex + direction + currentImages.length) % currentImages.length;
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+  const imgSrc = currentImages[currentIndex];
+  document.getElementById('lightbox-img').src = imgSrc.startsWith('http') ? imgSrc : `${API_URL}${imgSrc}`;
   document.getElementById('lightbox-counter').textContent = `${currentIndex + 1} / ${currentImages.length}`;
 }
 

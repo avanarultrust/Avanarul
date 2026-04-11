@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = true;
             btn.textContent = 'Uploading...';
 
-            const response = await fetch('${API_URL}/api/admin/projects', {
+            const response = await fetch(`${API_URL}/api/admin/projects`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData
@@ -73,7 +73,7 @@ async function loadDashboardData() {
 
     try {
         // Fetch All Transactions
-        const resTrans = await fetch('${API_URL}/api/admin/transactions', {
+        const resTrans = await fetch(`${API_URL}/api/admin/transactions`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const transactions = await resTrans.json();
@@ -99,7 +99,7 @@ async function loadDashboardData() {
         window.currentTransactions = transactions;
 
         // Fetch Projects
-        const resProj = await fetch('${API_URL}/api/projects');
+        const resProj = await fetch(`${API_URL}/api/projects`);
         const projects = await resProj.json();
         document.getElementById('project-count').textContent = projects.length;
 
