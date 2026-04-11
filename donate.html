@@ -675,6 +675,8 @@
   </div>
 
   <script>
+    const API_URL = "https://backend-b1pt.onrender.com";
+
     // Amount Selection Logic
     const amountBtns = document.querySelectorAll('.amount-btn');
     const customAmountInput = document.getElementById('custom-amount');
@@ -761,7 +763,7 @@
       btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
       try {
-        const response = await fetch('/api/donate', {
+        const response = await fetch(`${API_URL}/api/donate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(donationData)
