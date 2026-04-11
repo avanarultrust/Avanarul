@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Formal Profile | Avanarul Trust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #B8860B;
+      --primary-dark: #8B6914;
+      --primary-light: #F5E6C0;
+      --gold-bright: #D4A017;
+      --gold-shimmer: #C9A84C;
+      --cream: #FAF6EF;
+      --cream-2: #F4EDD9;
+      --cream-3: #EDE3CC;
+      --text: #2C1D0E;
+      --text-light: #5C4A2A;
+      --text-muted: #9A8160;
+      --border: rgba(184,134,11,0.16);
+      --border-warm: rgba(184,134,11,0.26);
+      --white: #FFFDF8;
+      --danger: #c0392b;
+      --success: #2d7a3a;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(184,134,11,0.09);
+      --shadow-lg: 0 8px 40px rgba(184,134,11,0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: rgba(250, 246, 239, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--border-warm);
+      padding: 0 40px;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 24px rgba(184,134,11,0.10);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--gold-shimmer);
+      box-shadow: 0 2px 10px rgba(184,134,11,0.22);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 18px rgba(184,134,11,0.34);
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border-warm);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: transparent;
+      transition: all 0.25s;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--gold-shimmer);
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .profile-container {
+      flex: 1;
+      padding: 50px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .profile-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 620px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* === Gold top accent line === */
+    .profile-card::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background: linear-gradient(90deg, var(--gold-bright), var(--primary-dark));
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .profile-header {
+      padding: 32px 32px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .profile-avatar {
+      width: 82px;
+      height: 82px;
+      background: linear-gradient(135deg, var(--cream-2), var(--cream-3));
+      border: 2px solid var(--border-warm);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .profile-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .profile-title p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .profile-title p i {
+      color: var(--gold-bright);
+      font-size: 0.75rem;
+    }
+
+    .profile-body {
+      padding: 0;
+    }
+
+    .info-row {
+      display: flex;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .info-row:hover {
+      background: rgba(184,134,11,0.03);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      flex: 0 0 160px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      padding-top: 2px;
+    }
+
+    .info-data {
+      flex: 1;
+      font-size: 0.97rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(45,122,58,0.10);
+      color: var(--success);
+      border: 1px solid rgba(45,122,58,0.20);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .profile-footer {
+      padding: 22px 32px;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-home-link {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      transition: all 0.25s;
+    }
+
+    .btn-home-link:hover {
+      color: var(--primary);
+      border-color: var(--gold-shimmer);
+      background: var(--primary-light);
+    }
+
+    .btn-danger {
+      background: white;
+      color: var(--danger);
+      border: 1.5px solid rgba(192,57,43,0.30);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+      border-color: var(--danger);
+    }
+
+    .loading-state {
+      padding: 70px 40px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .loading-state i {
+      color: var(--gold-shimmer);
+      margin-bottom: 16px;
+    }
+
+    .loading-state p {
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .navbar { padding: 0 20px; }
+      .logo-name { display: none; }
+      .profile-header { padding: 24px 20px; gap: 16px; }
+      .info-row { padding: 16px 20px; flex-direction: column; gap: 4px; }
+      .info-label { flex: none; }
+      .profile-footer { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="/logo.jpeg" alt="Avanarul Trust" class="logo-img">
+      <span class="logo-name">Avanarul Trust</span>
+    </a>
+    <a href="index.html" class="btn-outline"><i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Home</a>
+  </nav>
+
+  <main class="profile-container">
+    <div class="profile-card">
+      <div class="loading-state" id="loading-indicator">
+        <i class="fas fa-circle-notch fa-spin fa-2x" style="margin-bottom:15px;"></i>
+        <p>Loading user profile...</p>
+      </div>
+
+      <div id="profile-content" style="display: none;">
+        <div class="profile-header">
+          <div class="profile-avatar"><i class="fas fa-user-tie"></i></div>
+          <div class="profile-title">
+            <h1 id="display-name">Loading...</h1>
+            <p><i class="fas fa-star"></i> Member Account · Avanarul Trust</p>
+          </div>
+        </div>
+
+        <div class="profile-body">
+          <div class="info-row">
+            <div class="info-label">Account UID</div>
+            <div class="info-data" id="display-id" style="font-family: monospace;">-</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Email Address</div>
+            <div class="info-data" id="display-email">-</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Mobile Number</div>
+            <div class="info-data" id="display-mobile">-</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Account Status</div>
+            <div class="info-data"><span class="status-badge"><i class="fas fa-check-circle"></i> Verified</span></div>
+          </div>
+        </div>
+
+        <!-- Donation History Section -->
+        <div style="padding: 24px 32px; border-top: 1px solid var(--border);">
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 15px; color: var(--text);">
+            <i class="fas fa-hand-holding-heart" style="color: var(--gold-bright); margin-right: 8px;"></i> Recent Donations
+          </h3>
+          <div id="donation-list">
+            <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">Fetching donation history...</p>
+          </div>
+        </div>
+
+        <div class="profile-footer">
+          <a href="index.html" class="btn-home-link"><i class="fas fa-home" style="margin-right:6px;"></i>Home</a>
+          <button id="btn-profile-logout" class="btn-danger"><i class="fas fa-sign-out-alt" style="margin-right:6px;"></i>Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/profile.js"></script>
+</body>
+</html>

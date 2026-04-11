@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate | Avanarul Trust</title>
+  <meta name="description" content="Support Avanarul Trust's mission — renovating temples, medical awareness, and educational support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #B8860B;
+      --primary-dark: #8B6914;
+      --primary-light: #F5E6C0;
+      --gold-bright: #D4A017;
+      --gold-shimmer: #C9A84C;
+      --cream: #FAF6EF;
+      --cream-2: #F4EDD9;
+      --text: #2C1D0E;
+      --text-light: #5C4A2A;
+      --text-muted: #9A8160;
+      --border: rgba(184,134,11,0.18);
+      --border-warm: rgba(184,134,11,0.28);
+      --bg: #FAF6EF;
+      --white: #FFFDF8;
+      --success: #2d7a3a;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(184,134,11,0.09);
+      --shadow-lg: 0 8px 40px rgba(184,134,11,0.14);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(250, 246, 239, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid rgba(184,134,11,0.20);
+      padding: 0 40px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 24px rgba(184,134,11,0.10);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--primary);
+      font-weight: 700; font-size: 1.2rem;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--gold-shimmer);
+      box-shadow: 0 2px 10px rgba(184,134,11,0.20);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 18px rgba(184,134,11,0.32);
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.3px;
+    }
+
+    .nav-back {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      transition: all 0.25s;
+    }
+    .nav-back:hover { color: var(--primary); border-color: var(--gold-shimmer); background: var(--primary-light); }
+
+    /* ===== PAGE LAYOUT ===== */
+    .page-wrap {
+      padding-top: 100px;
+      padding-bottom: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-header .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid rgba(184,134,11,0.25);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== FORM CARD SECTIONS ===== */
+    .section-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--primary-dark);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .section-label i {
+      font-size: 1rem;
+      color: var(--primary);
+    }
+
+    /* ===== AMOUNT SELECTION ===== */
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .amount-btn {
+      border: 2px solid var(--border);
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .amount-btn:hover {
+      border-color: var(--gold-shimmer);
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(184,134,11,0.18);
+    }
+
+    .amount-btn.selected {
+      border-color: var(--gold-bright);
+      background: linear-gradient(135deg, var(--gold-bright), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 20px rgba(184,134,11,0.38);
+      transform: translateY(-2px);
+    }
+
+    .amount-btn.selected::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 18px; height: 18px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .amount-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .amount-label {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      font-weight: 500;
+    }
+
+    .amount-btn.selected .amount-label { opacity: 0.85; }
+
+    .custom-amount-wrap {
+      position: relative;
+    }
+
+    .custom-amount-prefix {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      pointer-events: none;
+    }
+
+    .custom-amount-input {
+      width: 100%;
+      padding: 15px 16px 15px 36px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      transition: all 0.25s;
+      background: var(--white);
+    }
+
+    .custom-amount-input:focus {
+      border-color: var(--gold-shimmer);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.12);
+    }
+
+    .custom-amount-input::placeholder { color: #cbd5e1; font-weight: 400; }
+
+    /* ===== FORM FIELDS ===== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-grid.cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .form-grid.cols-1 {
+      grid-template-columns: 1fr;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field-group.span-2 {
+      grid-column: span 2;
+    }
+
+    .field-group label {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.3px;
+    }
+
+    .field-group label span {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .field-group input,
+    .field-group select {
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus {
+      border-color: var(--gold-shimmer);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.12);
+    }
+
+    .field-group input::placeholder { color: #b0bec5; }
+    .field-group select { cursor: pointer; }
+
+    /* ===== SUBMIT SECTION ===== */
+    .submit-section {
+      background: linear-gradient(135deg, #2C1D0E 0%, #3A2510 50%, #4A3020 100%);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      border: 1px solid rgba(184,134,11,0.30);
+    }
+
+    .submit-summary {
+      color: white;
+    }
+
+    .submit-summary .label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .submit-summary .total-amount {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold-bright);
+    }
+
+    .btn-donate-now {
+      background: linear-gradient(135deg, var(--gold-bright), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 20px rgba(184,134,11,0.42);
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-donate-now:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(184,134,11,0.55);
+    }
+
+    .btn-donate-now:active {
+      transform: translateY(-1px);
+    }
+
+    /* ===== SUCCESS OVERLAY ===== */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-overlay.show {
+      display: flex;
+    }
+
+    .success-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 50px 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #d4edda, #a8d5b5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2.2rem;
+      color: #1a7a4a;
+    }
+
+    .success-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .success-card p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .btn-home {
+      background: linear-gradient(135deg, var(--gold-bright), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(184,134,11,0.30);
+    }
+
+    .btn-home:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(184,134,11,0.42); }
+
+    /* ===== TRUST BADGE ===== */
+    .trust-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 16px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .trust-item i { color: var(--success); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .amount-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .amount-value { font-size: 1.2rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+      .field-group.span-2 { grid-column: span 1; }
+      .submit-section { flex-direction: column; text-align: center; }
+      .btn-donate-now { width: 100%; justify-content: center; }
+      .page-header h1 { font-size: 1.8rem; }
+      .section-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="/logo.jpeg" alt="Avanarul Trust" class="logo-img">
+      <span class="logo-name">Avanarul Trust</span>
+    </a>
+    <a href="index.html" class="nav-back">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="badge"><i class="fas fa-heart"></i> Make a Difference</div>
+      <h1>Donate to Avanarul Trust</h1>
+      <p>Your contribution directly funds temple renovation, medical awareness, and scholarships for deserving students.</p>
+    </div>
+
+    <form id="donation-form" novalidate>
+
+      <!-- Donation Amount Section -->
+      <div class="section-card">
+        <div class="section-label">
+          <i class="fas fa-indian-rupee-sign"></i>
+          Donation Details
+        </div>
+
+        <div class="amount-grid">
+          <button type="button" class="amount-btn selected" data-amount="1000">
+            <span class="amount-value">₹1,000</span>
+            <span class="amount-label">Support</span>
+          </button>
+          <button type="button" class="amount-btn" data-amount="5000">
+            <span class="amount-value">₹5,000</span>
+            <span class="amount-label">Champion</span>
+          </button>
+          <button type="button" class="amount-btn" data-amount="10000">
+            <span class="amount-value">₹10,000</span>
+            <span class="amount-label">Patron</span>
+          </button>
+        </div>
+
+        <div class="custom-amount-wrap">
+          <span class="custom-amount-prefix">₹</span>
+          <input
+            type="number"
+            id="custom-amount"
+            class="custom-amount-input"
+            placeholder="Enter custom amount"
+            min="1"
+          >
+        </div>
+
+        <input type="hidden" id="final-amount" value="1000">
+      </div>
+
+      <!-- Personal Details Section -->
+      <div class="section-card">
+        <div class="section-label">
+          <i class="fas fa-user"></i>
+          Personal Details
+        </div>
+        <div class="form-grid">
+          <div class="field-group span-2">
+            <label for="donor-name">Full Name <span>*</span></label>
+            <input type="text" id="donor-name" placeholder="As per PAN / Aadhaar" required>
+          </div>
+          <div class="field-group">
+            <label for="donor-email">Email Address <span>*</span></label>
+            <input type="email" id="donor-email" placeholder="you@example.com" required>
+          </div>
+          <div class="field-group">
+            <label for="donor-phone">Phone Number <span>*</span></label>
+            <input type="tel" id="donor-phone" placeholder="+91 98765 43210" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Details Section -->
+      <div class="section-card">
+        <div class="section-label">
+          <i class="fas fa-map-marker-alt"></i>
+          Address Details
+        </div>
+        <div class="form-grid cols-1" style="gap: 18px;">
+          <div class="field-group">
+            <label for="address-line">Address Line <span>*</span></label>
+            <input type="text" id="address-line" placeholder="House / Flat No., Street, Colony" required>
+          </div>
+        </div>
+        <div class="form-grid cols-3" style="gap: 18px; margin-top: 18px;">
+          <div class="field-group">
+            <label for="address-city">City <span>*</span></label>
+            <input type="text" id="address-city" placeholder="e.g. Chennai" required>
+          </div>
+          <div class="field-group">
+            <label for="address-state">State <span>*</span></label>
+            <select id="address-state" required>
+              <option value="" disabled selected>Select State</option>
+              <option>Andhra Pradesh</option>
+              <option>Assam</option>
+              <option>Bihar</option>
+              <option>Delhi</option>
+              <option>Goa</option>
+              <option>Gujarat</option>
+              <option>Haryana</option>
+              <option>Karnataka</option>
+              <option>Kerala</option>
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+              <option>Odisha</option>
+              <option>Punjab</option>
+              <option>Rajasthan</option>
+              <option>Tamil Nadu</option>
+              <option>Telangana</option>
+              <option>Uttar Pradesh</option>
+              <option>West Bengal</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="address-pincode">Pincode <span>*</span></label>
+            <input type="text" id="address-pincode" placeholder="6 digits" maxlength="6" pattern="[0-9]{6}" required>
+          </div>
+        </div>
+        <div class="form-grid" style="gap: 18px; margin-top: 18px;">
+          <div class="field-group">
+            <label for="address-country">Country <span>*</span></label>
+            <select id="address-country" required>
+              <option value="India" selected>🇮🇳 India</option>
+              <option value="United States">🇺🇸 United States</option>
+              <option value="United Kingdom">🇬🇧 United Kingdom</option>
+              <option value="Canada">🇨🇦 Canada</option>
+              <option value="Australia">🇦🇺 Australia</option>
+              <option value="Singapore">🇸🇬 Singapore</option>
+              <option value="UAE">🇦🇪 UAE</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <div class="submit-section">
+        <div class="submit-summary">
+          <div class="label">Donation Total</div>
+          <div class="total-amount" id="display-amount">₹1,000</div>
+        </div>
+        <button type="submit" class="btn-donate-now" id="btn-donate-submit">
+          <i class="fas fa-heart"></i>
+          Donate Now
+        </button>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-strip">
+        <div class="trust-item"><i class="fas fa-shield-halved"></i> 100% Secure</div>
+        <div class="trust-item"><i class="fas fa-certificate"></i> 80G Tax Benefit</div>
+        <div class="trust-item"><i class="fas fa-lock"></i> Encrypted Payment</div>
+        <div class="trust-item"><i class="fas fa-check-circle"></i> Registered NGO</div>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- Success Modal -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-card">
+      <div class="success-icon"><i class="fas fa-check"></i></div>
+      <h2>Thank You!</h2>
+      <p>Your generous donation of <strong id="success-amount"></strong> has been recorded. You will receive a confirmation on your email shortly.</p>
+      <button class="btn-home" onclick="window.location.href='index.html'">
+        <i class="fas fa-home"></i> Back to Home
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Amount Selection Logic
+    const amountBtns = document.querySelectorAll('.amount-btn');
+    const customAmountInput = document.getElementById('custom-amount');
+    const finalAmountInput = document.getElementById('final-amount');
+    const displayAmount = document.getElementById('display-amount');
+
+    function formatCurrency(n) {
+      return '₹' + Number(n).toLocaleString('en-IN');
+    }
+
+    function selectAmount(amount) {
+      finalAmountInput.value = amount;
+      displayAmount.textContent = formatCurrency(amount);
+    }
+
+    amountBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        amountBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        customAmountInput.value = '';
+        selectAmount(btn.getAttribute('data-amount'));
+      });
+    });
+
+    customAmountInput.addEventListener('input', () => {
+      const val = customAmountInput.value.trim();
+      if (val && parseFloat(val) > 0) {
+        amountBtns.forEach(b => b.classList.remove('selected'));
+        selectAmount(parseFloat(val));
+      } else if (!val) {
+        // Revert to default if empty
+        const firstBtn = document.querySelector('.amount-btn');
+        firstBtn.classList.add('selected');
+        selectAmount(firstBtn.getAttribute('data-amount'));
+      }
+    });
+
+    // Form Submission
+    const form = document.getElementById('donation-form');
+    const successOverlay = document.getElementById('success-overlay');
+    const btnSubmit = document.getElementById('btn-donate-submit');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(el => {
+        if (!el.value.trim()) {
+          el.style.borderColor = '#ef4444';
+          el.focus();
+          valid = false;
+        } else {
+          el.style.borderColor = '';
+        }
+      });
+
+      if (!valid) return;
+
+      // Prepare data
+      const amount = finalAmountInput.value;
+      const userStr = localStorage.getItem('user');
+      const user = userStr ? JSON.parse(userStr) : null;
+
+      const donationData = {
+        amount: amount,
+        donorName: document.getElementById('donor-name').value,
+        donorEmail: document.getElementById('donor-email').value,
+        donorPhone: document.getElementById('donor-phone').value,
+        donorId: user ? user.id : null,
+        address: {
+          line: document.getElementById('address-line').value,
+          city: document.getElementById('address-city').value,
+          state: document.getElementById('address-state').value,
+          pincode: document.getElementById('address-pincode').value,
+          country: document.getElementById('address-country').value
+        }
+      };
+
+      // Show loading state
+      const originalBtnText = btnSubmit.innerHTML;
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+      try {
+        const response = await fetch('/api/donate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(donationData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('success-amount').textContent = formatCurrency(amount);
+          successOverlay.classList.add('show');
+          form.reset();
+        } else {
+          alert('Error: ' + (data.message || 'Could not record donation.'));
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Network error. Please try again later.');
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = originalBtnText;
+      }
+    });
+  </script>
+
+</body>
+</html>
