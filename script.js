@@ -209,6 +209,10 @@ let openModalHandler = function (e) {
   loginModal.classList.add('active');
 };
 
+if (btnLogin) {
+  btnLogin.addEventListener('click', openModalHandler);
+}
+
 // Close Modal
 if (modalClose) {
   modalClose.addEventListener('click', () => {
@@ -375,7 +379,6 @@ if (forgotPasswordForm) {
   checkUserSession();
   fetchJourneyProjects();
   initMobileBottomNav();
-});
 
 // ===== Mobile Bottom Nav Intelligence =====
 function initMobileBottomNav() {

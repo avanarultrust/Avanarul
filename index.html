@@ -342,76 +342,74 @@
     <div class="modal-card">
       <button class="modal-close" id="modal-close" aria-label="Close modal"><i class="fas fa-times"></i></button>
       
+      <div style="text-align: center; margin-bottom: 30px;">
+        <img src="/logo.jpeg" alt="Logo" style="width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto 16px;">
+        <h3 class="modal-title" style="margin-bottom: 0;">Avanarul Center</h3>
+        <p class="modal-subtitle">Dedicated to Purpose. Driven by Grace.</p>
+      </div>
+
       <!-- Modal Tabs -->
       <div class="modal-tabs">
-        <button class="modal-tab active" data-target="sign-in">Sign In</button>
-        <button class="modal-tab" data-target="sign-up">Sign Up</button>
+        <button class="modal-tab active" data-target="sign-in">Identify</button>
+        <button class="modal-tab" data-target="sign-up">Register</button>
       </div>
 
       <!-- Sign In Form -->
       <div class="modal-form-container active" id="sign-in-form">
-        <h3 class="modal-title">Welcome Back</h3>
-        <p class="modal-subtitle">Log in to continue to Avanarul Trust.</p>
         <div class="auth-message" id="login-message"></div>
         <form id="form-login">
           <div class="input-group">
             <input type="email" id="login-email" placeholder=" " required>
-            <label for="login-email">Email Address</label>
+            <label for="login-email">Email Repository</label>
           </div>
           <div class="input-group">
             <input type="password" id="login-password" placeholder=" " required>
-            <label for="login-password">Password</label>
+            <label for="login-password">Access Key</label>
           </div>
           <div class="forgot-password">
-            <a href="#" id="forgot-password-link">Forgot Password?</a>
+            <a href="#" id="forgot-password-link">Recover Access?</a>
           </div>
-          <button type="submit" class="btn-submit">Sign In</button>
-          
-
+          <button type="submit" class="btn-submit" style="padding: 16px;">Authorize Entry</button>
         </form>
       </div>
 
       <!-- Sign Up Form -->
       <div class="modal-form-container" id="sign-up-form">
-        <h3 class="modal-title">Join Us Today</h3>
-        <p class="modal-subtitle">Create an account to bring change.</p>
         <div class="auth-message" id="register-message"></div>
         <form id="form-register">
           <div class="input-group">
             <input type="text" id="register-name" placeholder=" " required>
-            <label for="register-name">Full Name</label>
+            <label for="register-name">Legal Full Name</label>
           </div>
           <div class="input-group">
             <input type="email" id="register-email" placeholder=" " required>
-            <label for="register-email">Email Address</label>
+            <label for="register-email">Electronic Mail</label>
           </div>
           <div class="input-group">
             <input type="tel" id="register-mobile" placeholder=" " required pattern="[0-9]{10}">
-            <label for="register-mobile">Mobile Number</label>
+            <label for="register-mobile">Comm. Number (10 digit)</label>
           </div>
           <div class="input-group">
             <input type="password" id="register-password" minlength="6" placeholder=" " required>
-            <label for="register-password">Password (min 6 chars)</label>
+            <label for="register-password">Secure Password</label>
           </div>
-          <button type="submit" class="btn-submit">Sign Up</button>
-          
-
+          <button type="submit" class="btn-submit" style="padding: 16px;">Establish Account</button>
         </form>
       </div>
 
       <!-- Forgot Password Form -->
       <div class="modal-form-container" id="forgot-password-form">
-        <h3 class="modal-title">Reset Password</h3>
-        <p class="modal-subtitle">Enter your email and we'll send a recovery link.</p>
+        <h3 class="modal-title" style="font-size: 1.5rem;">Access Recovery</h3>
+        <p class="modal-subtitle">Provice your email to initiate verification.</p>
         <div class="auth-message" id="forgot-message"></div>
         <form id="form-forgot">
           <div class="input-group">
             <input type="email" id="forgot-email" placeholder=" " required>
-            <label for="forgot-email">Email Address</label>
+            <label for="forgot-email">Verified Email</label>
           </div>
-          <button type="submit" class="btn-submit">Send Reset Link</button>
-          <div class="back-to-login" style="text-align: center; margin-top: 15px;">
-            <a href="#" id="back-to-login-link" style="color: var(--primary); font-family: var(--font-primary); font-weight: 500; font-size: 0.95rem;">Back to Login</a>
+          <button type="submit" class="btn-submit" style="padding: 16px;">Initiate Recovery</button>
+          <div class="back-to-login" style="text-align: center; margin-top: 20px;">
+            <a href="#" id="back-to-login-link" style="color: var(--primary); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem;">Back to Vault</a>
           </div>
         </form>
       </div>

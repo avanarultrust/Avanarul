@@ -3,475 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Avanarul Trust</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Executive Admin | Avanarul Trust</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --bg: #FAF6EF;
-            --card-bg: #FFFDF8;
-            --sidebar-bg: #F4EDD9;
-            --primary: #B8860B;
-            --primary-dark: #8B6914;
-            --accent: #D4A017;
-            --text: #2C1D0E;
-            --text-muted: #9A8160;
-            --border: rgba(184, 134, 11, 0.15);
-            --radius: 12px;
-            --shadow: 0 4px 20px rgba(184, 134, 11, 0.08);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            position: fixed;
-            height: 100vh;
-            box-shadow: 2px 0 15px rgba(184, 134, 11, 0.05);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--primary-dark);
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .nav-item {
-            padding: 14px 18px;
-            border-radius: var(--radius);
-            color: var(--text-muted);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        .nav-item:hover, .nav-item.active {
-            background: var(--bg);
-            color: var(--primary-dark);
-            box-shadow: inset 0 0 0 1px var(--border);
-        }
-
-        /* Mobile Toggle */
-        .admin-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
-            background: var(--primary);
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
-            cursor: pointer;
-        }
-
-        /* Sidebar Responsive */
-        @media (max-width: 992px) {
-            .sidebar {
-                left: -260px;
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-            .sidebar.open {
-                transform: translateX(260px);
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 80px 20px 40px;
-            }
-            .admin-toggle {
-                display: flex;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* Tables Responsive */
-        .table-wrap {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary-dark); }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        .stat-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-        .stat-label { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-        .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary-dark); font-family: 'Playfair Display', serif; }
-
-        /* Tables & Forms */
-        .section-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px;
-            box-shadow: var(--shadow);
-            display: none;
-        }
-        .section-card.active { display: block; animation: fadeIn 0.4s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        h2 { font-family: 'Playfair Display', serif; color: var(--primary-dark); margin-bottom: 24px; font-size: 1.5rem; }
-
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 16px; color: var(--text-muted); border-bottom: 2px solid var(--sidebar-bg); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; }
-        td { padding: 16px; border-bottom: 1px solid var(--sidebar-bg); font-size: 0.95rem; color: var(--text); }
-        tr:hover td { background: rgba(184, 134, 11, 0.02); }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--accent), var(--primary-dark));
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184, 134, 11, 0.3); }
-
-        .form-group { margin-bottom: 24px; }
-        .form-group label { display: block; margin-bottom: 10px; color: var(--text); font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            background: var(--white);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 14px;
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(44, 29, 14, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1.5px solid var(--border);
-            box-shadow: none;
-        }
-        .btn-secondary:hover {
-            background: var(--sidebar-bg);
-            color: var(--text);
-            transform: translateY(-1px);
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 15px rgba(192, 57, 43, 0.2);
-        }
-        .btn-danger:hover {
-            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.35);
-        }
-
-        /* Project Cards */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-        }
-        .project-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
-        .project-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(184, 134, 11, 0.12);
-        }
-        .project-item-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-            border-bottom: 1px solid var(--border);
-        }
-        .project-item-body {
-            padding: 20px;
-        }
-        .project-item-body h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-        .project-item-body p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 14px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .project-item-meta {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .project-item-meta i { color: var(--accent); }
-        .project-actions {
-            display: flex;
-            gap: 8px;
-            padding: 0 20px 18px;
-        }
-        .project-actions button {
-            padding: 8px 16px;
-            font-size: 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            border: none;
-        }
-        .btn-edit {
-            background: rgba(184, 134, 11, 0.1);
-            color: var(--primary-dark);
-        }
-        .btn-edit:hover { background: rgba(184, 134, 11, 0.2); }
-        .btn-delete {
-            background: rgba(192, 57, 43, 0.08);
-            color: #c0392b;
-        }
-        .btn-delete:hover { background: rgba(192, 57, 43, 0.18); }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-        .empty-state i {
-            font-size: 3rem;
-            color: var(--accent);
-            margin-bottom: 16px;
-            opacity: 0.4;
-        }
-        .empty-state p {
-            font-size: 0.95rem;
-        }
-    </style>
+    
+    <!-- Link existing design system + new dashboard styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
-<body>
-    <button class="admin-toggle" id="admin-toggle">
-        <i class="fas fa-bars"></i>
+<body class="admin-portal">
+
+    <!-- Mobile Navigation Toggle -->
+    <button class="nav-toggle-btn" id="admin-toggle" aria-label="Toggle Navigation">
+        <i class="fas fa-bars-staggered"></i>
     </button>
 
-    <div class="sidebar" id="admin-sidebar">
-        <a href="/" class="logo">
-            <i class="fas fa-shield-halved"></i>
-            Avanarul Admin
-        </a>
-        <div class="nav-menu">
-            <div class="nav-item active" onclick="switchTab('overview')"><i class="fas fa-chart-line"></i> Overview</div>
-            <div class="nav-item" onclick="switchTab('transactions')"><i class="fas fa-wallet"></i> Transactions</div>
-            <div class="nav-item" onclick="switchTab('projects')"><i class="fas fa-folder-plus"></i> Journey Projects</div>
-            <div class="nav-item" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    <!-- Side Intelligence Navigation -->
+    <aside class="sidebar-wrapper" id="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="brand-link">
+                <img src="/logo.jpeg" alt="Avanarul" class="brand-logo">
+                <div class="brand-info">
+                    <span class="brand-name">Avanarul</span>
+                    <span class="brand-tagline">Admin Suite</span>
+                </div>
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <span class="nav-group-label">Core Management</span>
+                <div class="nav-link active" onclick="switchTab('overview')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overview</span>
+                </div>
+                <div class="nav-link" onclick="switchTab('transactions')">
+                    <i class="fas fa-indian-rupee-sign"></i>
+                    <span>Revenue Log</span>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-group-label">Content Intelligence</span>
+                <div class="nav-link" onclick="switchTab('projects')">
+                    <i class="fas fa-gopuram"></i>
+                    <span>Journey Portfolio</span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-user-card">
+                <div class="avatar-circle">A</div>
+                <div class="user-details">
+                    <p class="user-name">Root Admin</p>
+                    <p class="user-role">Super User</p>
+                </div>
+            </div>
+            <button class="logout-action" id="logout-btn">
+                <i class="fas fa-power-off"></i>
+                <span>Secure Exit</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Dynamic Workspace -->
+    <main class="workspace-viewport">
+        
+        <!-- Workspace Header -->
+        <header class="workspace-header">
+            <div class="header-left">
+                <h1 id="tab-title" class="current-view-title">Overview</h1>
+                <p class="workspace-subtitle">Intelligence and controls for Avanarul Trust.</p>
+            </div>
+            <div class="header-right">
+                <div class="live-status">
+                    <span class="pulse-indicator"></span>
+                    Systems Operational
+                </div>
+                <div class="date-widget" id="header-date">
+                    Admin Active
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Containers -->
+        <div class="workspace-content">
+            
+            <!-- OVERVIEW TAB -->
+            <section id="overview-tab" class="dashboard-section active">
+                <div class="stats-matrix">
+                    <div class="metric-card gold">
+                        <div class="metric-header">
+                            <span class="metric-icon"><i class="fas fa-vault"></i></span>
+                            <span class="metric-trend positive"><i class="fas fa-arrow-up"></i> Live</span>
+                        </div>
+                        <div class="metric-body">
+                            <h3 id="total-donations" class="metric-value">₹ 0</h3>
+                            <p class="metric-label">Lifetime Contributions</p>
+                        </div>
+                    </div>
+
+                    <div class="metric-card gradient">
+                        <div class="metric-header">
+                            <span class="metric-icon"><i class="fas fa-users-viewfinder"></i></span>
+                        </div>
+                        <div class="metric-body">
+                            <h3 id="donor-count" class="metric-value">0</h3>
+                            <p class="metric-label">Global Visionaries</p>
+                        </div>
+                    </div>
+
+                    <div class="metric-card glass">
+                        <div class="metric-header">
+                            <span class="metric-icon"><i class="fas fa-shapes"></i></span>
+                        </div>
+                        <div class="metric-body">
+                            <h3 id="project-count" class="metric-value">0</h3>
+                            <p class="metric-label">Active Ventures</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity or Secondary View -->
+                <div class="activity-module glass">
+                    <h2 class="module-title">Operational Intelligence</h2>
+                    <div class="empty-intelligence">
+                        <i class="fas fa-radar fa-spin"></i>
+                        <p>Aggregating real-time data from all trust touchpoints...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TRANSACTIONS TAB -->
+            <section id="transactions-tab" class="dashboard-section">
+                <div class="list-module glass">
+                    <div class="module-header">
+                        <h2 class="module-title">Revenue Archives</h2>
+                        <div class="search-filter">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Filter identifiers...">
+                        </div>
+                    </div>
+                    <div class="table-frame">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>Processing Date</th>
+                                    <th>Entity Identifier</th>
+                                    <th>Communication Channel</th>
+                                    <th>Amount</th>
+                                    <th>Visibility</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body">
+                                <!-- Data stream -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS TAB -->
+            <section id="projects-tab" class="dashboard-section">
+                <div class="module-controls">
+                    <h2 class="module-title">Journey Portfolio Manager</h2>
+                    <button class="action-btn gold" onclick="toggleAddForm()">
+                        <i class="fas fa-plus-circle"></i> New Venture
+                    </button>
+                </div>
+
+                <!-- Creation Interface (Collapsible) -->
+                <div id="add-project-section" class="composer-interface glass">
+                    <div class="composer-header">
+                        <h3>Draft New Journey</h3>
+                        <p>Provide mission details and visual assets.</p>
+                    </div>
+                    <form id="project-form" class="premium-form">
+                        <div class="form-grid">
+                            <div class="input-field">
+                                <label>Venture Title</label>
+                                <input type="text" id="proj-title" placeholder="Project name" required>
+                            </div>
+                            <div class="input-field full">
+                                <label>Mission Narrative</label>
+                                <textarea id="proj-desc" rows="6" placeholder="Deep details about the impact..." required></textarea>
+                            </div>
+                            <div class="input-field full">
+                                <label class="file-drop-zone">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Select Portfolio Assets (Multiple)</span>
+                                    <input type="file" id="proj-images" multiple accept="image/*" required>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">Publish to Public Journey</button>
+                            <button type="button" class="cancel-btn" onclick="toggleAddForm()">Retract Draft</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="projects-list" class="portfolio-grid">
+                    <!-- Cards will be injected -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ADMINISTRATIVE MODALS -->
+    
+    <!-- Intelligence Modal -->
+    <div id="trans-modal" class="portal-modal">
+        <div class="modal-surface glass">
+            <div class="modal-decor"></div>
+            <h3 class="modal-primary-label">Legacy Intel</h3>
+            <div id="modal-details" class="intel-stream"></div>
+            <button class="dismiss-btn" onclick="closeModal()">Acknowledge</button>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1>Dashboard Overview</h1>
-            <div id="admin-info" style="color: var(--text-secondary)">Signed in as admin</div>
-        </div>
-
-        <div id="overview-tab" class="section-card active">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Total Donations</div>
-                    <div class="stat-value" id="total-donations">₹ 0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Donors Count</div>
-                    <div class="stat-value" id="donor-count">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Active Projects</div>
-                    <div class="stat-value" id="project-count">0</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="transactions-tab" class="section-card">
-            <h2>All Transactions</h2>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Donor</th>
-                            <th>Email</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="transactions-body">
-                        <!-- Dynamic Rows -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="projects-tab" class="section-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <h2 style="margin-bottom: 0;">Journey Projects</h2>
-                <button class="btn" onclick="toggleAddForm()" id="toggle-add-btn"><i class="fas fa-plus" style="margin-right: 8px;"></i>Add New</button>
-            </div>
-
-            <!-- Add Project Form (hidden by default) -->
-            <div id="add-project-section" style="display: none; margin-bottom: 40px; padding: 28px; background: var(--sidebar-bg); border-radius: var(--radius); border: 1px solid var(--border);">
-                <h3 style="font-family: 'Playfair Display', serif; color: var(--primary-dark); margin-bottom: 20px; font-size: 1.15rem;">New Project</h3>
-                <form id="project-form">
-                    <div class="form-group">
-                        <label>Project Title</label>
-                        <input type="text" id="proj-title" required placeholder="e.g., Kanchipuram Temple Restoration">
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="proj-desc" rows="5" required placeholder="Detailed project details..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Project Photos (Multiple Allowed)</label>
-                        <input type="file" id="proj-images" multiple accept="image/*" required>
-                    </div>
-                    <div style="display: flex; gap: 12px;">
-                        <button type="submit" class="btn">Publish to Journey</button>
-                        <button type="button" class="btn btn-secondary" onclick="toggleAddForm()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Project List -->
-            <div id="projects-list">
-                <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                    <i class="fas fa-circle-notch fa-spin fa-2x" style="margin-bottom: 12px; color: var(--accent);"></i>
-                    <p>Loading projects...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Transaction Detail Modal -->
-    <div id="trans-modal" class="modal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px;">Transaction Details</h3>
-            <div id="modal-details" style="display: flex; flex-direction: column; gap: 15px; color: var(--text-secondary);">
-                <!-- Details injected here -->
-            </div>
-            <button class="btn" style="margin-top: 30px; width: 100%;" onclick="closeModal()">Close</button>
-        </div>
-    </div>
-
-    <!-- Project Edit Modal -->
-    <div id="edit-modal" class="modal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark);">Edit Project</h3>
+    <!-- Edit/Refine Modal -->
+    <div id="edit-modal" class="portal-modal">
+        <div class="modal-surface glass">
+            <h3 class="modal-primary-label">Refine Venture</h3>
             <input type="hidden" id="edit-project-id">
-            <div class="form-group">
-                <label>Project Title</label>
-                <input type="text" id="edit-title" required>
+            <div class="edit-fields">
+                <div class="input-field">
+                    <label>Updated Title</label>
+                    <input type="text" id="edit-title" required>
+                </div>
+                <div class="input-field">
+                    <label>Refined Narrative</label>
+                    <textarea id="edit-desc" rows="8" required></textarea>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="edit-desc" rows="5" required></textarea>
-            </div>
-            <div style="display: flex; gap: 12px; margin-top: 24px;">
-                <button class="btn" style="flex: 1;" onclick="saveProjectEdit()">Save Changes</button>
-                <button class="btn btn-secondary" style="flex: 1;" onclick="closeEditModal()">Cancel</button>
+            <div class="modal-actions">
+                <button class="action-btn gold" onclick="saveProjectEdit()">Commit Updates</button>
+                <button class="action-btn outline" onclick="closeEditModal()">Dismiss</button>
             </div>
         </div>
     </div>
 
-    <!-- Delete Confirm Modal -->
-    <div id="delete-modal" class="modal">
-        <div class="modal-content" style="text-align: center;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: #c0392b; margin-bottom: 16px;"></i>
-            <h3 style="margin-bottom: 12px;">Delete Project?</h3>
-            <p style="color: var(--text-muted); margin-bottom: 28px;">This action cannot be undone. The project and all its images will be permanently removed.</p>
+    <!-- Destruction Confirm Modal -->
+    <div id="delete-modal" class="portal-modal">
+        <div class="modal-surface warning glass">
+            <div class="warning-icon"><i class="fas fa-skull-crossbones"></i></div>
+            <h3 class="modal-primary-label">Purge Record?</h3>
+            <p class="warning-desc">This action is permanent. The journey record will be erased from the trust archives.</p>
             <input type="hidden" id="delete-project-id">
-            <div style="display: flex; gap: 12px;">
-                <button class="btn btn-danger" style="flex: 1;" onclick="confirmDelete()"><i class="fas fa-trash" style="margin-right: 8px;"></i>Delete</button>
-                <button class="btn btn-secondary" style="flex: 1;" onclick="closeDeleteModal()">Cancel</button>
+            <div class="modal-actions">
+                <button class="action-btn danger" onclick="confirmDelete()">Execute Purge</button>
+                <button class="action-btn outline" onclick="closeDeleteModal()">Cancel</button>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script type="module" src="admin.js"></script>
+    <script>
+        // Inline date widget
+        const d = new Date();
+        document.getElementById('header-date').innerText = d.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    </script>
 </body>
 </html>
