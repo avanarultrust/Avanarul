@@ -1,65 +1,35 @@
-// ===== Hero Carousel (Dynamic) =====
+import { API_URL } from './config.js';
+
+// ===== Navbar Scroll Effect =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== Mobile Nav Toggle =====
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('open');
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navToggle.classList.remove('active');
+    navMenu.classList.remove('open');
+  });
+});
+
+// ===== Hero Carousel =====
+const slides = document.querySelectorAll('.hero-slide');
+const indicators = document.querySelectorAll('.indicator');
 let currentSlide = 0;
 let slideInterval;
-let slides = [];
-let indicators = [];
-
-async function initDynamicSlideshow() {
-    const carousel = document.getElementById('hero-carousel');
-    const indicatorContainer = document.getElementById('hero-indicators');
-    if (!carousel) return;
-
-    try {
-        const response = await fetch(`${API_URL}/api/slideshow`);
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-            // Render Slides
-            carousel.innerHTML = data.map((slide, index) => {
-                const imgUrl = slide.image.startsWith('http') ? slide.image : `${API_URL}${slide.image}`;
-                return `
-                <div class="hero-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                    <div class="hero-bg" style="background-image: url('${imgUrl}'); background-size: cover; background-position: center;"></div>
-                    <div class="hero-overlay"></div>
-                    <div class="hero-content">
-                        <h1 class="hero-title animate-fade-up">${slide.title}</h1>
-                        <div class="hero-buttons animate-fade-up delay-1">
-                            ${slide.btn1Text ? `<a href="${slide.btn1Link}" class="btn btn-hero-outline">${slide.btn1Text}</a>` : ''}
-                            ${slide.btn2Text ? `<a href="${slide.btn2Link}" class="btn btn-hero-primary">${slide.btn2Text}</a>` : ''}
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-
-            // Render Indicators
-            indicatorContainer.innerHTML = data.map((_, index) => `
-                <button class="indicator ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-label="Slide ${index + 1}"></button>
-            `).join('');
-
-            // Re-bind elements
-            slides = document.querySelectorAll('.hero-slide');
-            indicators = document.querySelectorAll('.indicator');
-            
-            // Re-bind indicator clicks
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', () => {
-                    stopAutoplay();
-                    goToSlide(parseInt(indicator.dataset.slide));
-                    startAutoplay();
-                });
-            });
-
-            startAutoplay();
-        }
-    } catch (err) {
-        console.error('Slideshow load error:', err);
-        // Fallback or error state
-        carousel.innerHTML = '<div class="error-hero">Unable to load slideshow</div>';
-    }
-}
 
 function goToSlide(index) {
-  if (slides.length === 0) return;
   slides[currentSlide].classList.remove('active');
   indicators[currentSlide].classList.remove('active');
   currentSlide = (index + slides.length) % slides.length;
@@ -76,10 +46,7 @@ function prevSlide() {
 }
 
 function startAutoplay() {
-  if (slides.length > 1) {
-    stopAutoplay();
-    slideInterval = setInterval(nextSlide, 5000);
-  }
+  slideInterval = setInterval(nextSlide, 5000);
 }
 
 function stopAutoplay() {
@@ -99,30 +66,36 @@ document.getElementById('hero-prev').addEventListener('click', () => {
   startAutoplay();
 });
 
+// Indicator clicks
+indicators.forEach(indicator => {
+  indicator.addEventListener('click', () => {
+    stopAutoplay();
+    goToSlide(parseInt(indicator.dataset.slide));
+    startAutoplay();
+  });
+});
+
 // Touch/swipe support for hero
 let touchStartX = 0;
 let touchEndX = 0;
 const heroEl = document.getElementById('hero');
 
-if (heroEl) {
-    heroEl.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
+heroEl.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
 
-    heroEl.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-            stopAutoplay();
-            if (diff > 0) nextSlide();
-            else prevSlide();
-            startAutoplay();
-        }
-    }, { passive: true });
-}
+heroEl.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) {
+    stopAutoplay();
+    if (diff > 0) nextSlide();
+    else prevSlide();
+    startAutoplay();
+  }
+}, { passive: true });
 
-// Initialize
-initDynamicSlideshow();
+startAutoplay();
 
 // ===== Animated Counter =====
 function animateCounter(el, target) {
