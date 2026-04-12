@@ -78,6 +78,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             adminToggle.querySelector('i').classList.toggle('fa-times');
         });
     }
+
+    // Slideshow Form Listeners
+    const slideForm1 = document.getElementById('slide-form-1');
+    if (slideForm1) {
+        slideForm1.addEventListener('submit', (e) => {
+            e.preventDefault();
+            updateSlide(1);
+        });
+    }
+
+    const slideForm2 = document.getElementById('slide-form-2');
+    if (slideForm2) {
+        slideForm2.addEventListener('submit', (e) => {
+            e.preventDefault();
+            updateSlide(2);
+        });
+    }
+
+    const slideForm3 = document.getElementById('slide-form-3');
+    if (slideForm3) {
+        slideForm3.addEventListener('submit', (e) => {
+            e.preventDefault();
+            updateSlide(3);
+        });
+    }
+
+    // Initial Slideshow Load (optional, only if needed when tab switches)
+    fetchSlideshow();
 });
 
 // ===== LOAD ALL DATA =====
@@ -176,7 +204,8 @@ function switchTab(tabId) {
     const titles = {
         'overview': 'Dashboard Overview',
         'transactions': 'All Transactions',
-        'projects': 'Journey Portfolio'
+        'projects': 'Journey Portfolio',
+        'slideshow': 'Hero Slideshow Manager'
     };
 
     // Corrected from '.section-card' to '.dashboard-section'
@@ -330,6 +359,100 @@ async function confirmDelete() {
     }
 }
 
+// ===== EXCEL EXPORT =====
+function downloadTransactionsExcel() {
+    if (!window.currentTransactions || window.currentTransactions.length === 0) {
+        alert('No transactions to export.');
+        return;
+    }
+
+    // Flatten and format data for Excel
+    const data = window.currentTransactions.map(t => ({
+        Date: new Date(t.timestamp).toLocaleDateString(),
+        Name: t.name,
+        Email: t.email,
+        Phone: t.phone || 'N/A',
+        Amount: t.amount,
+        Address: `${t.address?.line || ''}, ${t.address?.city || ''}, ${t.address?.state || ''} - ${t.address?.pincode || ''}`,
+        Status: t.status || 'Completed'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+
+    // Generate and download
+    XLSX.writeFile(workbook, `Avanarul_Transactions_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+// ===== SLIDESHOW MANAGEMENT =====
+async function fetchSlideshow() {
+    try {
+        const res = await fetch(`${API_URL}/api/slideshow`);
+        const slides = await res.json();
+        
+        slides.forEach(slide => {
+            const sid = slide.slideId;
+            const titleEl = document.getElementById(`slide${sid}-title`);
+            const btn1T = document.getElementById(`slide${sid}-btn1Text`);
+            const btn1L = document.getElementById(`slide${sid}-btn1Link`);
+            const btn2T = document.getElementById(`slide${sid}-btn2Text`);
+            const btn2L = document.getElementById(`slide${sid}-btn2Link`);
+
+            if (titleEl) titleEl.value = slide.title;
+            if (btn1T) btn1T.value = slide.btn1Text;
+            if (btn1L) btn1L.value = slide.btn1Link;
+            if (btn2T) btn2T.value = slide.btn2Text;
+            if (btn2L) btn2L.value = slide.btn2Link;
+        });
+    } catch (err) {
+        console.error('Error fetching slideshow:', err);
+    }
+}
+
+async function updateSlide(id) {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    
+    formData.append('title', document.getElementById(`slide${id}-title`).value);
+    formData.append('btn1Text', document.getElementById(`slide${id}-btn1Text`).value);
+    formData.append('btn1Link', document.getElementById(`slide${id}-btn1Link`).value);
+    formData.append('btn2Text', document.getElementById(`slide${id}-btn2Text`).value);
+    formData.append('btn2Link', document.getElementById(`slide${id}-btn2Link`).value);
+
+    const imgFile = document.getElementById(`slide${id}-image`).files[0];
+    if (imgFile) {
+        formData.append('image', imgFile);
+    }
+
+    try {
+        const btn = document.querySelector(`#slide-form-${id} .submit-btn`);
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Updating...';
+
+        const response = await fetch(`${API_URL}/api/admin/slideshow/${id}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        });
+
+        if (response.ok) {
+            alert(`Slide ${id} updated successfully!`);
+            fetchSlideshow();
+        } else {
+            const err = await response.json();
+            alert('Error: ' + err.message);
+        }
+        
+        btn.disabled = false;
+        btn.textContent = originalText;
+    } catch (error) {
+        console.error('Slide update error:', error);
+        alert('Server error during slide update.');
+    }
+}
+
 // Attach functions to window for inline onclicks in HTML
 window.switchTab = switchTab;
 window.viewDetails = viewDetails;
@@ -341,3 +464,5 @@ window.saveProjectEdit = saveProjectEdit;
 window.openDeleteModal = openDeleteModal;
 window.closeDeleteModal = closeDeleteModal;
 window.confirmDelete = confirmDelete;
+window.downloadTransactionsExcel = downloadTransactionsExcel;
+window.updateSlide = updateSlide;

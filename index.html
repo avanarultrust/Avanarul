@@ -16,6 +16,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <!-- ⚠️ PASTE YOUR GOOGLE CLIENT ID BELOW -->
   <meta name="google-client-id" content="YOUR_GOOGLE_CLIENT_ID_HERE">
+  <link rel="icon" type="image/png" href="/favicon.png" />
 </head>
 <body>
 
@@ -51,52 +52,26 @@
 
   <!-- Hero Section - Carousel -->
   <section class="hero" id="hero">
-    <div class="hero-carousel">
-      <!-- Slide 1 -->
-      <div class="hero-slide active" data-slide="0">
-        <div class="hero-bg hero-bg-1" style="background-image: url('/temple-slideshow-v2.jpg'); background-size: cover; background-position: center;"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-          <h1 class="hero-title animate-fade-up">Renovating and Preserving<br>Hindu Temples</h1>
-          <div class="hero-buttons animate-fade-up delay-1">
-            <a href="#mission" class="btn btn-hero-outline">Our Mission</a>
-            <a href="donate.html" class="btn btn-hero-primary">Donate Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 2 -->
-      <div class="hero-slide" data-slide="1">
-        <div class="hero-bg hero-bg-2" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-          <h1 class="hero-title">Empowering Communities Through<br>Medical Awareness Programs</h1>
-          <div class="hero-buttons">
-            <a href="#" class="btn btn-hero-outline">Support Students</a>
-            <a href="donate.html" class="btn btn-hero-primary">Donate Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="hero-slide" data-slide="2">
-        <div class="hero-bg hero-bg-3" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-          <h1 class="hero-title">Supporting the Next Generation<br>With Educational Support</h1>
-          <div class="hero-buttons">
-            <a href="#programs" class="btn btn-hero-outline">Our Programs</a>
-            <a href="#" class="btn btn-hero-primary">Get Involved</a>
-          </div>
-        </div>
+    <div class="hero-carousel" id="hero-carousel">
+      <!-- Dynamic slides will be loaded here -->
+      <div class="loading-hero" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #2C1D0E; color: white; z-index: 10;">
+        <i class="fas fa-circle-notch fa-spin fa-3x"></i>
       </div>
     </div>
 
     <!-- Carousel Indicators -->
-    <div class="hero-indicators">
-      <button class="indicator active" data-slide="0" aria-label="Slide 1"></button>
-      <button class="indicator" data-slide="1" aria-label="Slide 2"></button>
-      <button class="indicator" data-slide="2" aria-label="Slide 3"></button>
+    <div class="hero-indicators" id="hero-indicators">
+      <!-- Dynamic indicators will be loaded here -->
+    </div>
+
+    <!-- Carousel Arrows -->
+    <button class="hero-arrow hero-arrow-left" id="hero-prev" aria-label="Previous slide">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="hero-arrow hero-arrow-right" id="hero-next" aria-label="Next slide">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </section>
     </div>
 
     <!-- Carousel Arrows -->

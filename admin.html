@@ -13,6 +13,9 @@
     <!-- Link existing design system + new dashboard styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="admin.css">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Excel Export Library -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 <body class="admin-portal">
 
@@ -51,6 +54,10 @@
                 <div class="nav-link" onclick="switchTab('projects')">
                     <i class="fas fa-gopuram"></i>
                     <span>Journey Portfolio</span>
+                </div>
+                <div class="nav-link" onclick="switchTab('slideshow')">
+                    <i class="fas fa-images"></i>
+                    <span>Hero Slideshow</span>
                 </div>
             </div>
         </nav>
@@ -143,9 +150,14 @@
                 <div class="list-module glass">
                     <div class="module-header">
                         <h2 class="module-title">Revenue Archives</h2>
-                        <div class="search-filter">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Filter identifiers...">
+                        <div style="display: flex; gap: 15px;">
+                            <button class="action-btn outline" onclick="downloadTransactionsExcel()">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </button>
+                            <div class="search-filter">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Filter identifiers...">
+                            </div>
                         </div>
                     </div>
                     <div class="table-frame">
@@ -209,6 +221,133 @@
 
                 <div id="projects-list" class="portfolio-grid">
                     <!-- Cards will be injected -->
+                </div>
+            </section>
+
+            <!-- SLIDESHOW TAB -->
+            <section id="slideshow-tab" class="dashboard-section">
+                <div class="module-header">
+                    <h2 class="module-title">Hero Slideshow Manager</h2>
+                    <p class="section-description">Manage the two primary slides on the homepage.</p>
+                </div>
+
+                <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                    <!-- Slide 1 -->
+                    <div class="composer-interface glass" style="display: block; margin-bottom: 0;">
+                        <div class="composer-header">
+                            <h3>Slide 1 (Main)</h3>
+                        </div>
+                        <form id="slide-form-1" class="premium-form">
+                            <div class="input-field full">
+                                <label>Hero Title</label>
+                                <input type="text" id="slide1-title" placeholder="Main title" required>
+                            </div>
+                            <div class="input-field full">
+                                <label>Image Asset</label>
+                                <input type="file" id="slide1-image" accept="image/*">
+                                <small style="color: var(--text-muted);">Leave empty to keep current image</small>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 1 Text</label>
+                                    <input type="text" id="slide1-btn1Text" value="Our Mission">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 1 Link</label>
+                                    <input type="text" id="slide1-btn1Link" value="#mission">
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 2 Text</label>
+                                    <input type="text" id="slide1-btn2Text" value="Donate Now">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 2 Link</label>
+                                    <input type="text" id="slide1-btn2Link" value="donate.html">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn" style="width: 100%;">Update Slide 1</button>
+                        </form>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="composer-interface glass" style="display: block; margin-bottom: 0;">
+                        <div class="composer-header">
+                            <h3>Slide 2</h3>
+                        </div>
+                        <form id="slide-form-2" class="premium-form">
+                            <div class="input-field full">
+                                <label>Hero Title</label>
+                                <input type="text" id="slide2-title" placeholder="Main title" required>
+                            </div>
+                            <div class="input-field full">
+                                <label>Image Asset</label>
+                                <input type="file" id="slide2-image" accept="image/*">
+                                <small style="color: var(--text-muted);">Leave empty to keep current image</small>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 1 Text</label>
+                                    <input type="text" id="slide2-btn1Text" value="Support Students">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 1 Link</label>
+                                    <input type="text" id="slide2-btn1Link" value="#">
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 2 Text</label>
+                                    <input type="text" id="slide2-btn2Text" value="Donate Now">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 2 Link</label>
+                                    <input type="text" id="slide2-btn2Link" value="donate.html">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn" style="width: 100%;">Update Slide 2</button>
+                        </form>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="composer-interface glass" style="display: block; margin-bottom: 0;">
+                        <div class="composer-header">
+                            <h3>Slide 3</h3>
+                        </div>
+                        <form id="slide-form-3" class="premium-form">
+                            <div class="input-field full">
+                                <label>Hero Title</label>
+                                <input type="text" id="slide3-title" placeholder="Main title" required>
+                            </div>
+                            <div class="input-field full">
+                                <label>Image Asset</label>
+                                <input type="file" id="slide3-image" accept="image/*">
+                                <small style="color: var(--text-muted);">Leave empty to keep current image</small>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 1 Text</label>
+                                    <input type="text" id="slide3-btn1Text" value="Our Programs">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 1 Link</label>
+                                    <input type="text" id="slide3-btn1Link" value="#programs">
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="input-field">
+                                    <label>Button 2 Text</label>
+                                    <input type="text" id="slide3-btn2Text" value="Get Involved">
+                                </div>
+                                <div class="input-field">
+                                    <label>Button 2 Link</label>
+                                    <input type="text" id="slide3-btn2Link" value="#">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn" style="width: 100%;">Update Slide 3</button>
+                        </form>
+                    </div>
                 </div>
             </section>
         </div>
