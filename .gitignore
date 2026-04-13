@@ -6,3 +6,10 @@ dist/
 .vite/
 *.log
 .DS_Store
+
+# Nested workspace ignores
+frontend/node_modules/
+frontend/dist/
+backend/node_modules/
+backend/.env
+backend/uploads/
