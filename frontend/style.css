@@ -2132,6 +2132,20 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 
+.intro-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--primary);
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: textReveal 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+  text-align: center;
+  margin-top: -8px;
+}
+
 @keyframes logoReveal {
   0% {
     opacity: 0;
@@ -2162,5 +2176,9 @@ img { max-width: 100%; display: block; }
   .intro-text {
     font-size: 1.8rem;
     letter-spacing: 2px;
+  }
+  .intro-tagline {
+    font-size: 0.88rem;
+    letter-spacing: 1.5px;
   }
 }
