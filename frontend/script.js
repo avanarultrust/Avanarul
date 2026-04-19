@@ -57,7 +57,7 @@ async function fetchHomeSlideshow() {
       // Render Slides
       heroCarousel.innerHTML = data.map((s, idx) => `
         <div class="hero-slide ${idx === 0 ? 'active' : ''}" data-slide="${idx}">
-          <div class="hero-bg" style="background-image: url('${s.image.startsWith('http') ? s.image : API_URL + s.image}'); background-size: cover; background-position: center;"></div>
+          <div class="hero-bg" style="background-image: url('${s.image && s.image.startsWith('http') ? s.image : (API_URL || '') + s.image}'); background-size: cover; background-position: center;"></div>
           <div class="hero-overlay"></div>
           <div class="hero-content">
             <h1 class="hero-title animate-fade-up">${s.title.replace(/\n/g, '<br>')}</h1>

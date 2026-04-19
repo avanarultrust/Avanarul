@@ -390,7 +390,7 @@ async function fetchSlideshow() {
         container.innerHTML = slides.map(s => `
             <div class="slide-card glass">
                 <div class="slide-preview">
-                    <img src="${s.image.startsWith('http') ? s.image : API_URL + s.image}" id="preview-slide-${s.slideId}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
+                    <img src="${s.image && s.image.startsWith('http') ? s.image : (API_URL || '') + s.image}" id="preview-slide-${s.slideId}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
                     <div class="slide-badge" style="position: absolute; top: 10px; left: 10px; background: var(--primary); color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem;">Slide ${s.slideId}</div>
                 </div>
                 <form class="slide-edit-form" onsubmit="event.preventDefault(); updateSlide(${s.slideId}, this)">
